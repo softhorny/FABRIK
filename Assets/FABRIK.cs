@@ -29,7 +29,7 @@ public class FABRIK : MonoBehaviour
         _positions[ _positions.Length - 1 ] = _target.position;
         
         for ( int i = _positions.Length - 2; i > 0; i-- )
-        _positions[ i ] = _positions[ i + 1 ] - Normalize( _positions[ i + 1 ] - _bones[ i ].position ) * _lengths[ i ];
+            _positions[ i ] = _positions[ i + 1 ] - Normalize( _positions[ i + 1 ] - _bones[ i ].position ) * _lengths[ i ];
     
         for ( int i = 0; i < _positions.Length - 1; i++ )
         {
