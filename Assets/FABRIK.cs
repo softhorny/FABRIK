@@ -27,14 +27,15 @@ public class FABRIK : MonoBehaviour
     {
         _positions[ 0 ]                     = _bones[ 0 ].position;
         _positions[ _positions.Length - 1 ] = _target.position;
-
+        
         for ( int i = _positions.Length - 2; i > 0; i-- )
-            _positions[ i ] = _positions[ i + 1 ] - Normalize( _positions[ i + 1 ] - _bones[ i ].position ) * _lengths[ i ];
-        
-        for ( int i = 1; i < _positions.Length; i++ )
-            _positions[ i ] = _positions[ i - 1 ] + ( _positions[ i - 1 ] = Normalize( _positions[ i ] - _positions[ i - 1 ] ) ) * _lengths[ i - 1 ];
-        
+        _positions[ i ] = _positions[ i + 1 ] - Normalize( _positions[ i + 1 ] - _bones[ i ].position ) * _lengths[ i ];
+    
         for ( int i = 0; i < _positions.Length - 1; i++ )
-            _bones[ i ].rotation = FromToRotation( _bones[ i ].rotation * _inDirection, _positions[ i ] ) * _bones[ i ].rotation;
+        {
+            Vector3 from = _bones[ i ].rotation * _inDirection, to = Normalize( _positions[ i + 1 ] - _positions[ i ] );
+            _positions[ i + 1 ] = _positions[ i ] + to * _lengths[ i ];
+            _bones[ i ].rotation = FromToRotation( from, to ) * _bones[ i ].rotation;
+        }
     }
 }
